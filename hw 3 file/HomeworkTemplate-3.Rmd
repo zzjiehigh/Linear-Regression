@@ -1,0 +1,37 @@
+---
+title: "Homework Assignment 1"
+author: "your name"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  pdf_document: 
+  html_document:
+    df_print: paged
+---
+
+
+```{r setup, echo=FALSE}
+library(knitr)
+# set global chunk options: images will be 7x5 inches
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(digits = 4)
+
+
+## indents are for indenting r code as formatted text
+## They may need to be adjusted depending on your OS
+# if your output looks odd, increase or decrease indent
+indent1 = '    '
+indent2 = '        '
+indent3 = '            '
+```
+
+
+1. Text: write whatever you want here. Eg. this is my solution to homework 1 Q1.
+
+$y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$.
+
+```{r}
+x <- seq(10)
+y <- 1 + 2 * x + rnorm(10)
+mod <- lm(y~x)
+summary(mod)
+```

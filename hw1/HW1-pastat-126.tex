@@ -1,0 +1,636 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Untitled},
+  pdfauthor={Zejie Gao},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Untitled}
+\author{Zejie Gao}
+\date{2023-02-01}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The dataset trees contains measurements of Girth (tree diameter) in
+  inches, Height in feet, and Volume of timber (in cubic feet) of a
+  sample of 31 felled black cherry trees. The following commands can be
+  used to read the data into R.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(datasets)}
+\FunctionTok{head}\NormalTok{(trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Girth Height Volume
+## 1   8.3     70   10.3
+## 2   8.6     65   10.3
+## 3   8.8     63   10.2
+## 4  10.5     72   16.4
+## 5  10.7     81   18.8
+## 6  10.8     83   19.7
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Briefly describe the data set trees, i.e., how many observations
+  (rows) and how many variables (columns) are there in the data set?
+  What are the variable names?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 31
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ncol}\NormalTok{(trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ls}\NormalTok{(trees) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Girth"  "Height" "Volume"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# There are 31 rows and 3 column in the data set, with three variables named "Girth","Height", and  "Volume"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Use the pairs function to construct a scatter plot matrix of the
+  logarithms of Girth, Height and Volume.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
+## v ggplot2 3.3.6     v purrr   0.3.4
+## v tibble  3.1.8     v dplyr   1.0.9
+## v tidyr   1.2.0     v stringr 1.4.0
+## v readr   2.1.2     v forcats 0.5.1
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log\_trees }\OtherTok{\textless{}{-}}\NormalTok{ trees }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Girth =} \FunctionTok{log}\NormalTok{(Girth)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Height =} \FunctionTok{log}\NormalTok{(Height))}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Volume =} \FunctionTok{log}\NormalTok{(Volume))}
+\FunctionTok{pairs}\NormalTok{(log\_trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HW1-pastat-126_files/figure-latex/unnamed-chunk-3-1.pdf}
+(c) Use the cor function to determine the correlation matrix for the
+three (logged) variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(log\_trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            Girth    Height    Volume
+## Girth  1.0000000 0.5301949 0.9766649
+## Height 0.5301949 1.0000000 0.6486377
+## Volume 0.9766649 0.6486377 1.0000000
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Are there missing values?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.na}\NormalTok{(log\_trees)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Girth Height Volume
+##  [1,] FALSE  FALSE  FALSE
+##  [2,] FALSE  FALSE  FALSE
+##  [3,] FALSE  FALSE  FALSE
+##  [4,] FALSE  FALSE  FALSE
+##  [5,] FALSE  FALSE  FALSE
+##  [6,] FALSE  FALSE  FALSE
+##  [7,] FALSE  FALSE  FALSE
+##  [8,] FALSE  FALSE  FALSE
+##  [9,] FALSE  FALSE  FALSE
+## [10,] FALSE  FALSE  FALSE
+## [11,] FALSE  FALSE  FALSE
+## [12,] FALSE  FALSE  FALSE
+## [13,] FALSE  FALSE  FALSE
+## [14,] FALSE  FALSE  FALSE
+## [15,] FALSE  FALSE  FALSE
+## [16,] FALSE  FALSE  FALSE
+## [17,] FALSE  FALSE  FALSE
+## [18,] FALSE  FALSE  FALSE
+## [19,] FALSE  FALSE  FALSE
+## [20,] FALSE  FALSE  FALSE
+## [21,] FALSE  FALSE  FALSE
+## [22,] FALSE  FALSE  FALSE
+## [23,] FALSE  FALSE  FALSE
+## [24,] FALSE  FALSE  FALSE
+## [25,] FALSE  FALSE  FALSE
+## [26,] FALSE  FALSE  FALSE
+## [27,] FALSE  FALSE  FALSE
+## [28,] FALSE  FALSE  FALSE
+## [29,] FALSE  FALSE  FALSE
+## [30,] FALSE  FALSE  FALSE
+## [31,] FALSE  FALSE  FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(log\_trees))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# No, there is no missing values}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Use the lm function in R to fit the multiple regression model:
+  log(Volumei) = β0 + β1 log(Girthi) + β2 log(Heighti) + εi and print
+  out the summary of the model fit.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Volume }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Girth }\SpecialCharTok{+}\NormalTok{ Height, }\AttributeTok{data =}\NormalTok{ log\_trees)}
+\NormalTok{fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Volume ~ Girth + Height, data = log_trees)
+## 
+## Coefficients:
+## (Intercept)        Girth       Height  
+##      -6.632        1.983        1.117
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ log\_trees}\SpecialCharTok{$}\NormalTok{Volume}
+\NormalTok{x1 }\OtherTok{\textless{}{-}}\NormalTok{ log\_trees}\SpecialCharTok{$}\NormalTok{Girth}
+\NormalTok{x2 }\OtherTok{\textless{}{-}}\NormalTok{ log\_trees}\SpecialCharTok{$}\NormalTok{Height}
+\NormalTok{R}\FloatTok{.2} \OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{((fit}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{sum}\NormalTok{((y }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(y))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\NormalTok{R}\FloatTok{.2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9776784
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Volume ~ Girth + Height, data = log_trees)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.168561 -0.048488  0.002431  0.063637  0.129223 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -6.63162    0.79979  -8.292 5.06e-09 ***
+## Girth        1.98265    0.07501  26.432  < 2e-16 ***
+## Height       1.11712    0.20444   5.464 7.81e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.08139 on 28 degrees of freedom
+## Multiple R-squared:  0.9777, Adjusted R-squared:  0.9761 
+## F-statistic: 613.2 on 2 and 28 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Estimation of the lm: log(Volumei) = {-}6.63 + 1.98 log(Girthi) + 1.12 log(Heighti) + εi}
+\CommentTok{\# Since R\^{}2 (0.9777 or 0.978 on the summary) is very close to 1, the model better fits the data. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Create the design matrix (i.e., the matrix of predictor variables), X,
+  for the model in (e), and verify that the least squares coefficient
+  estimates in the summary output are given by the least squares
+  formula: βˆ = (X\^{}T X)\textsuperscript{(−1)X}T y.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\OtherTok{\textless{}{-}}\NormalTok{ log\_trees}\SpecialCharTok{$}\NormalTok{Girth}
+\NormalTok{v2 }\OtherTok{\textless{}{-}}\NormalTok{ log\_trees}\SpecialCharTok{$}\NormalTok{Height}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\AttributeTok{times=}\FunctionTok{nrow}\NormalTok{(log\_trees)),v1,v2) }\CommentTok{\# create a matrix by combining vectors column{-}wise}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(log\_trees}\SpecialCharTok{$}\NormalTok{Volume)}
+\NormalTok{βˆ }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{(X))}\SpecialCharTok{\%*\%}\NormalTok{(}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{(y))}
+\NormalTok{βˆ}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         [,1]
+##    -6.631617
+## v1  1.982650
+## v2  1.117123
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The βˆ matrix match the output I got in (e)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Compute the predicted response values from the fitted regression
+  model, the residuals, and an estimate of the error variance Var(ε) =
+  σ\^{}2.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_hat }\OtherTok{\textless{}{-}}\NormalTok{ X}\SpecialCharTok{\%*\%}\NormalTok{βˆ}
+\NormalTok{y\_hat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           [,1]
+##  [1,] 2.310270
+##  [2,] 2.297879
+##  [3,] 2.308547
+##  [4,] 2.807900
+##  [5,] 2.976888
+##  [6,] 3.022580
+##  [7,] 2.802931
+##  [8,] 2.945736
+##  [9,] 3.035777
+## [10,] 2.981461
+## [11,] 3.057130
+## [12,] 3.031349
+## [13,] 3.031349
+## [14,] 2.974906
+## [15,] 3.118250
+## [16,] 3.246641
+## [17,] 3.401459
+## [18,] 3.475068
+## [19,] 3.319702
+## [20,] 3.218167
+## [21,] 3.467691
+## [22,] 3.524097
+## [23,] 3.478455
+## [24,] 3.643019
+## [25,] 3.754853
+## [26,] 3.929478
+## [27,] 3.965974
+## [28,] 3.983197
+## [29,] 3.994242
+## [30,] 3.994242
+## [31,] 4.355446
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Res }\OtherTok{\textless{}{-}}\NormalTok{ fit}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{sigma2.hat }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(Res}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/}\NormalTok{ fit}\SpecialCharTok{$}\NormalTok{df.residual}
+\NormalTok{sigma2.hat}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.006623692
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSR }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(fit}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSR}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.1854634
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# SSR = 0.1855}
+\CommentTok{\# Var(εi) = 0.006624}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Consider the simple linear regression model: yi = β0 + β1xi + εi
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Assume β0 = 0. What is the interpretation of this assumption? What is
+  the implication on the regression line? What does the regression line
+  plot look like?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The assumption represent that the yi will have a high likelihood to be zero when xi equals to zero. }
+\CommentTok{\# It implicate the y intercept of linear regression model is zero. }
+\CommentTok{\# The regression line start from coordinate (0,0).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Derive the LS estimate of β1 when β0 = 0.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# β1 = sum((y{-}mean(y))*(x{-}mean(x)))/sum((x{-}mean(x))ˆ2)}
+\CommentTok{\# β1 does not influenced by β0 value}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  How can we introduce this assumption within the lm function?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# lm(y \textasciitilde{} x{-}1, data = dataset)}
+\CommentTok{\# Based on the assumption β0 = 0, β0 from lm function can be deleted.Then, the lm function will become yi = β1xi + εi }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  For the same model, assume β1 = 0. What is the interpretation of this
+  assumption? What is the implication on the regression line? What does
+  the regression line plot look like?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The assumption represent that the value of yi does not affected by the value of xi. The predictor x1 is not significant when explaining yi.}
+\CommentTok{\# It implicate the linear regression model wasn\textquotesingle{}t able to find a linear relationship between the yi and x1.}
+\CommentTok{\# The plot will only have a horizontal line which is y = constant value (β0 + εi) or so called the mean of y.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Derive the LS estimate of β0 when β1 = 0.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# β0 = mean(y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  How can we introduce this assumption within the lm function?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# lm(y \textasciitilde{} 1, data = dataset)}
+\CommentTok{\# Based on the assumption β1 = 0, β1 part from lm function can be deleted.Then, the lm function will become  yi = β0 +  εi.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Consider the simple linear regression model: yi = β0 + β1xi + εi
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Use the LS estimation general result βˆ = (XT X)−1XT y to find the
+  explicit estimates for β0 and β1.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# on the pdf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Show that the LS estimates βˆ0 and βˆ1 are unbiased estimates for β0
+  and β1 respectively.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# on the pdf}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

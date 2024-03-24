@@ -1,0 +1,863 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={pstat-126-extra},
+  pdfauthor={Zejie Gao},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{pstat-126-extra}
+\author{Zejie Gao}
+\date{2023-03-23}
+
+\begin{document}
+\maketitle
+
+Our goal is to model the response mpg in terms of the rest of the
+variables (except name).
+
+Partition the data set into two sets a training data and a test data.
+Remove every fifth observation from the data for use as a test sample.
+Perform an exploratory analysis. Comment on your findings. Perform a
+regression analysis and come up with the best multiple linear regression
+model that explains the response mpg in terms of the rest (except name).
+Comment on your findings and explain the methods and strategies that you
+employed in order to select the model you picked. Things you have to
+include in this part: - Model diagnostics - Justification on whether it
+is necessary or not to do any transformation on the response or the
+predictors - Variable selection Assess the prediction performance by
+using the test sample.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Car }\OtherTok{\textless{}{-}} \FunctionTok{read.table}\NormalTok{(}\StringTok{"cars (1).txt"}\NormalTok{,}\AttributeTok{header=}\NormalTok{T)}
+\FunctionTok{str}\NormalTok{(Car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    32 obs. of  12 variables:
+##  $ name: chr  "Mazda RX4" "Mazda RX4 Wag" "Datsun 710" "Hornet 4 Drive" ...
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : int  6 6 4 6 8 6 8 4 4 6 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : int  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : int  0 0 1 1 0 1 0 1 1 1 ...
+##  $ am  : int  1 1 1 0 0 0 0 0 0 0 ...
+##  $ gear: int  4 4 4 3 3 3 3 4 4 4 ...
+##  $ carb: int  4 4 1 1 2 1 4 2 2 4 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Car }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(Car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test\_indices }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(Car), }\AttributeTok{by=}\DecValTok{5}\NormalTok{)}
+\NormalTok{test\_data }\OtherTok{\textless{}{-}}\NormalTok{ Car[test\_indices,] }
+\NormalTok{train\_data }\OtherTok{\textless{}{-}}\NormalTok{ Car[}\SpecialCharTok{{-}}\NormalTok{test\_indices, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  To perform some exploratory analysis on data car, I create a
+  scatterplot matrix to visualize the relationships between all the
+  variables, a correlation matrix to examine the pairwise correlations
+  between variables, and histograms, density plots, and boxplots to
+  explore the distribution of the response variable ``mpg''. From the
+  correlation matrix, there are 13.36577\% correlation between variables
+  higher than 0.9 or lower than -0.9. This data indicate possible high
+  pairwise collinearity that may impact our data analysis. Based on the
+  histogram and density plot, most of the mpg value fall bettween 15 and
+  25 and the distribution is right-skewed.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(train\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      name                mpg             cyl             disp      
+##  Length:26          Min.   :10.40   Min.   :4.000   Min.   : 75.7  
+##  Class :character   1st Qu.:15.28   1st Qu.:4.000   1st Qu.:120.5  
+##  Mode  :character   Median :19.55   Median :6.000   Median :196.3  
+##                     Mean   :20.07   Mean   :6.077   Mean   :221.8  
+##                     3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:303.2  
+##                     Max.   :32.40   Max.   :8.000   Max.   :460.0  
+##        hp             drat             wt             qsec      
+##  Min.   : 52.0   Min.   :2.760   Min.   :1.513   Min.   :14.50  
+##  1st Qu.: 95.5   1st Qu.:3.098   1st Qu.:2.504   1st Qu.:16.88  
+##  Median :111.5   Median :3.715   Median :3.203   Median :17.71  
+##  Mean   :145.2   Mean   :3.622   Mean   :3.168   Mean   :17.90  
+##  3rd Qu.:180.0   3rd Qu.:3.920   3rd Qu.:3.570   3rd Qu.:18.90  
+##  Max.   :335.0   Max.   :4.930   Max.   :5.424   Max.   :22.90  
+##        vs               am              gear            carb      
+##  Min.   :0.0000   Min.   :0.0000   Min.   :3.000   Min.   :1.000  
+##  1st Qu.:0.0000   1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000  
+##  Median :0.0000   Median :0.0000   Median :4.000   Median :2.000  
+##  Mean   :0.4615   Mean   :0.4231   Mean   :3.692   Mean   :2.731  
+##  3rd Qu.:1.0000   3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :5.000   Max.   :8.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(train\_data))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pairs}\NormalTok{(train\_data[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{corr\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(train\_data[,}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{)])}
+\NormalTok{high\_cor }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(corr\_matrix}\SpecialCharTok{\textgreater{}} \FloatTok{0.9} \SpecialCharTok{|}\NormalTok{ corr\_matrix }\SpecialCharTok{\textless{}} \FloatTok{0.9}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(corr\_matrix)}
+\NormalTok{high\_cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13.36577
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(train\_data}\SpecialCharTok{$}\NormalTok{mpg, }
+     \AttributeTok{main=}\StringTok{"Distribution of MPG in Training"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"MPG"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{density}\NormalTok{(train\_data}\SpecialCharTok{$}\NormalTok{mpg), }
+     \AttributeTok{main=}\StringTok{"Density Plot of MPG in Training"}\NormalTok{, }
+     \AttributeTok{xlab=}\StringTok{"MPG"}\NormalTok{, }
+     \AttributeTok{ylab=}\StringTok{"Density"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-3-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(train\_data}\SpecialCharTok{$}\NormalTok{mpg, }
+        \AttributeTok{main=}\StringTok{"Boxplot of MPG in Training"}\NormalTok{, }\AttributeTok{ylab=}\StringTok{"MPG"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-3-4.pdf}
+2. Model diagnostics on error (a) constant variance No clear trend on
+this graph represent the residual could have a constant variance. In
+addition, ncvTest help prove the contstant variance.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(mpg }\SpecialCharTok{\textasciitilde{}}\NormalTok{ cyl }\SpecialCharTok{+}\NormalTok{ disp }\SpecialCharTok{+}\NormalTok{ hp }\SpecialCharTok{+}\NormalTok{ drat }\SpecialCharTok{+}\NormalTok{ wt }\SpecialCharTok{+}\NormalTok{ qsec }\SpecialCharTok{+}\NormalTok{ vs }\SpecialCharTok{+}\NormalTok{ am }\SpecialCharTok{+}\NormalTok{ gear }\SpecialCharTok{+}\NormalTok{ carb,}
+\NormalTok{           train\_data)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(mod1), }\FunctionTok{residuals}\NormalTok{(mod1))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{car}\SpecialCharTok{::}\FunctionTok{ncvTest}\NormalTok{(mod1) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Non-constant Variance Score Test 
+## Variance formula: ~ fitted.values 
+## Chisquare = 2.222176, Df = 1, p = 0.13604
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  normality Due to small p-value, we could not reject null hypothesis of
+  the normality. Thus it is normal.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{qqnorm}\NormalTok{(}\FunctionTok{residuals}\NormalTok{((mod1), }
+                 \AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
+                 \AttributeTok{main =} \StringTok{\textquotesingle{}Residual vs Theoretical quantiles\textquotesingle{}}\NormalTok{,}
+                 \AttributeTok{pch =} \DecValTok{18}\NormalTok{))}
+\FunctionTok{qqline}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(mod1))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(mod1))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuals(mod1)
+## W = 0.95012, p-value = 0.2334
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Independence Due to small value 0.03571, we could accept the
+  alternative hyposis that the true autocorrealtion is greater than 0.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(train\_data)[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 26
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_hat }\OtherTok{\textless{}{-}}\NormalTok{ mod1}\SpecialCharTok{$}\NormalTok{fitted.values}
+\NormalTok{e\_hat }\OtherTok{\textless{}{-}}\NormalTok{ mod1}\SpecialCharTok{$}\NormalTok{residuals}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(train\_data)[}\DecValTok{1}\NormalTok{]}
+\FunctionTok{plot}\NormalTok{(mod1}\SpecialCharTok{$}\NormalTok{residuals[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(n}\DecValTok{{-}1}\NormalTok{)], mod1}\SpecialCharTok{$}\NormalTok{residuals[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{n], }
+     \AttributeTok{xlab =} \StringTok{" res\_i"}\NormalTok{, }
+     \AttributeTok{ylab =} \StringTok{"res\_i+1"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"sucessive residual"}\NormalTok{)}
+\FunctionTok{dwtest}\NormalTok{(mpg }\SpecialCharTok{\textasciitilde{}}\NormalTok{ cyl }\SpecialCharTok{+}\NormalTok{ disp }\SpecialCharTok{+}\NormalTok{ hp }\SpecialCharTok{+}\NormalTok{ drat }\SpecialCharTok{+}\NormalTok{ wt }\SpecialCharTok{+}\NormalTok{ qsec }\SpecialCharTok{+}\NormalTok{ vs }\SpecialCharTok{+}\NormalTok{ am }\SpecialCharTok{+}\NormalTok{ gear }\SpecialCharTok{+}\NormalTok{ carb, }\AttributeTok{data =}\NormalTok{ train\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Durbin-Watson test
+## 
+## data:  mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
+## DW = 1.5555, p-value = 0.03571
+## alternative hypothesis: true autocorrelation is greater than 0
+\end{verbatim}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-6-1.pdf}
+3. Model diagnosis on unusual observation (a) high leverage No high
+leverage point exist in this data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hatv }\OtherTok{\textless{}{-}} \FunctionTok{hatvalues}\NormalTok{(mod1)}
+\NormalTok{Car\_lev }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{index =} \FunctionTok{seq}\NormalTok{(}\FunctionTok{length}\NormalTok{(hatv)),}
+                           \AttributeTok{Leverage =}\NormalTok{ hatv, }\AttributeTok{namesC =}\NormalTok{ train\_data}\SpecialCharTok{$}\NormalTok{name)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(Leverage }\SpecialCharTok{\textasciitilde{}}\NormalTok{ index, }\AttributeTok{data =}\NormalTok{ Car\_lev, }\AttributeTok{col =} \StringTok{"white"}\NormalTok{, }\AttributeTok{pch =} \ConstantTok{NULL}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(Leverage }\SpecialCharTok{\textasciitilde{}}\NormalTok{index, }\AttributeTok{labels =}\NormalTok{ namesC, }\AttributeTok{data =}\NormalTok{ Car\_lev , }\AttributeTok{cex =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{font =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =} \StringTok{"purple"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\DecValTok{2}\SpecialCharTok{*}\FunctionTok{sum}\NormalTok{(hatv)}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(Car\_lev)[}\DecValTok{1}\NormalTok{], }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(hatv }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sum}\NormalTok{(hatv)}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(Car\_lev)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{high\_lev }\OtherTok{\textless{}{-}}\NormalTok{ train\_data}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(hatv }\SpecialCharTok{\textgreater{}} \DecValTok{2}\SpecialCharTok{*}\FunctionTok{sum}\NormalTok{(hatv)}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(Car\_lev)[}\DecValTok{1}\NormalTok{])}
+\NormalTok{high\_lev}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] name mpg  cyl  disp hp   drat wt   qsec vs   am   gear carb
+## <0 行> (或0-长度的row.names)
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  outliers In this case, we do not have outlier.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{r }\OtherTok{\textless{}{-}} \FunctionTok{rstandard}\NormalTok{(mod1)}
+\NormalTok{outliers }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(r }\SpecialCharTok{\textgreater{}} \DecValTok{3} \SpecialCharTok{|}\NormalTok{ r}\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{3}\NormalTok{)}
+\NormalTok{outliers}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  influential observations There are five influential observations
+  exists in our train\_data.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(mod1)}
+\NormalTok{H }\OtherTok{\textless{}{-}}\NormalTok{ X }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X)}
+\FunctionTok{print}\NormalTok{(H[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             1            2            3           4           6
+## 1  0.37939459  0.352379043 -0.029983249 -0.02826913 -0.04532256
+## 2  0.35237904  0.357957531 -0.006488445 -0.06933762 -0.03610984
+## 3 -0.02998325 -0.006488445  0.261212766  0.03569016  0.10706049
+## 4 -0.02826913 -0.069337616  0.035690155  0.30826984  0.22559781
+## 6 -0.04532256 -0.036109843  0.107060489  0.22559781  0.29798286
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sum\_diag }\OtherTok{\textless{}{-}}\FunctionTok{sum}\NormalTok{(}\FunctionTok{diag}\NormalTok{(H)); sum\_diag}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p\_star }\OtherTok{\textless{}{-}} \FunctionTok{ncol}\NormalTok{(X); p\_star}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cook }\OtherTok{\textless{}{-}} \FunctionTok{cooks.distance}\NormalTok{(mod1)}
+\NormalTok{Car\_cook }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{index =} \FunctionTok{seq}\NormalTok{(}\FunctionTok{length}\NormalTok{(cook)),}
+                            \AttributeTok{cookd =} \FunctionTok{abs}\NormalTok{(cook), }\AttributeTok{namesC =}\NormalTok{ train\_data}\SpecialCharTok{$}\NormalTok{name)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\FloatTok{0.5}\NormalTok{,}\FloatTok{0.5}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(cookd }\SpecialCharTok{\textasciitilde{}}\NormalTok{ index, }\AttributeTok{data =}\NormalTok{ Car\_cook, }\AttributeTok{col =} \StringTok{"white"}\NormalTok{, }\AttributeTok{pch =} \ConstantTok{NULL}\NormalTok{)}
+\FunctionTok{text}\NormalTok{(cookd }\SpecialCharTok{\textasciitilde{}}\NormalTok{index, }\AttributeTok{labels =}\NormalTok{ namesC, }\AttributeTok{data =}\NormalTok{ Car\_cook , }\AttributeTok{cex =} \FloatTok{0.4}\NormalTok{, }
+     \AttributeTok{font =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =} \StringTok{"purple"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{4}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(X)[}\DecValTok{1}\NormalTok{], }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(cook }\SpecialCharTok{\textgreater{}=} \DecValTok{4}\SpecialCharTok{/}\FunctionTok{dim}\NormalTok{(X)[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Transformation Since the confidence interval do not contains lambda =
+  1, transformation is necessary.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}
+\NormalTok{bc }\OtherTok{\textless{}{-}} \FunctionTok{boxcox}\NormalTok{(mod1, }\AttributeTok{plotit =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{boxcox}\NormalTok{(mod1, }\AttributeTok{plotit =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{lambda =} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.4}\NormalTok{, }\FloatTok{1.3}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lambda }\OtherTok{\textless{}{-}}\NormalTok{ bc}\SpecialCharTok{$}\NormalTok{x[}\FunctionTok{which.max}\NormalTok{(bc}\SpecialCharTok{$}\NormalTok{y)]; lambda}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.2222222
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train\_data\_new }\OtherTok{\textless{}{-}}\NormalTok{ train\_data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mpg =}\NormalTok{ (mpg}\SpecialCharTok{\^{}}\NormalTok{(lambda)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{lambda)}
+
+\NormalTok{test\_data\_new }\OtherTok{\textless{}{-}}\NormalTok{ train\_data }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mpg =}\NormalTok{ (mpg}\SpecialCharTok{\^{}}\NormalTok{(lambda)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\NormalTok{lambda)}
+\CommentTok{\# change both train and test}
+\NormalTok{mod2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(mpg }\SpecialCharTok{\textasciitilde{}}\NormalTok{ cyl }\SpecialCharTok{+}\NormalTok{ disp }\SpecialCharTok{+}\NormalTok{ hp }\SpecialCharTok{+}\NormalTok{ drat }\SpecialCharTok{+}\NormalTok{ wt }\SpecialCharTok{+}\NormalTok{ qsec }\SpecialCharTok{+}\NormalTok{ vs }\SpecialCharTok{+}\NormalTok{ am }\SpecialCharTok{+}\NormalTok{ gear }\SpecialCharTok{+}\NormalTok{ carb,}
+\NormalTok{           train\_data\_new)}
+\FunctionTok{plot}\NormalTok{(mod2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-10-2.pdf}
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-10-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(mod1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-10-4.pdf}
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-10-5.pdf}
+4. model selection After performing the necessary analyses, it was found
+that the mod3 model (mpg \textasciitilde{} hp + wt + qsec + gear) has
+the lowest AIC and MSE compared to the other models tested using ridge
+and lasso regression. Based on these findings, it is suggested that
+lasso regression favors the inclusion of only the four predictors in
+mod3.
+
+Furthermore, ridge regression resulted in a higher MSE compared to mod3,
+indicating that mod3 provides a better fit to the data. However, the
+difference in MSE between ridge regression and mod3 was not very large.
+Therefore, if researchers want to include more variables in the model,
+ridge regression may be a better choice.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{step}\NormalTok{(mod2, }\AttributeTok{direction =} \StringTok{"backward"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Start:  AIC=-139.62
+## mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb
+## 
+##        Df Sum of Sq      RSS     AIC
+## - drat  1 0.0000127 0.051926 -141.62
+## - vs    1 0.0000235 0.051937 -141.61
+## - cyl   1 0.0002562 0.052170 -141.50
+## - carb  1 0.0003009 0.052215 -141.47
+## - qsec  1 0.0005078 0.052422 -141.37
+## - am    1 0.0007037 0.052617 -141.27
+## - disp  1 0.0008407 0.052754 -141.21
+## - hp    1 0.0021348 0.054049 -140.57
+## - gear  1 0.0024701 0.054384 -140.41
+## - wt    1 0.0036118 0.055526 -139.87
+## <none>              0.051914 -139.62
+## 
+## Step:  AIC=-141.62
+## mpg ~ cyl + disp + hp + wt + qsec + vs + am + gear + carb
+## 
+##        Df Sum of Sq      RSS     AIC
+## - vs    1 0.0000276 0.051954 -143.60
+## - cyl   1 0.0002508 0.052177 -143.49
+## - carb  1 0.0003728 0.052299 -143.43
+## - qsec  1 0.0005087 0.052435 -143.36
+## - am    1 0.0006920 0.052618 -143.27
+## - disp  1 0.0008982 0.052825 -143.17
+## - hp    1 0.0021266 0.054053 -142.57
+## - gear  1 0.0024577 0.054384 -142.41
+## - wt    1 0.0036715 0.055598 -141.84
+## <none>              0.051926 -141.62
+## 
+## Step:  AIC=-143.6
+## mpg ~ cyl + disp + hp + wt + qsec + am + gear + carb
+## 
+##        Df Sum of Sq      RSS     AIC
+## - cyl   1 0.0003680 0.052322 -145.42
+## - carb  1 0.0003935 0.052348 -145.41
+## - am    1 0.0006805 0.052634 -145.26
+## - qsec  1 0.0007615 0.052715 -145.22
+## - disp  1 0.0008903 0.052844 -145.16
+## - hp    1 0.0021799 0.054134 -144.53
+## - gear  1 0.0024402 0.054394 -144.41
+## - wt    1 0.0039513 0.055905 -143.70
+## <none>              0.051954 -143.60
+## 
+## Step:  AIC=-145.42
+## mpg ~ disp + hp + wt + qsec + am + gear + carb
+## 
+##        Df Sum of Sq      RSS     AIC
+## - carb  1 0.0006382 0.052960 -147.10
+## - am    1 0.0009574 0.053279 -146.95
+## - disp  1 0.0013411 0.053663 -146.76
+## - qsec  1 0.0015226 0.053845 -146.67
+## - hp    1 0.0023320 0.054654 -146.29
+## - wt    1 0.0039120 0.056234 -145.54
+## - gear  1 0.0039819 0.056304 -145.51
+## <none>              0.052322 -145.42
+## 
+## Step:  AIC=-147.1
+## mpg ~ disp + hp + wt + qsec + am + gear
+## 
+##        Df Sum of Sq      RSS     AIC
+## - disp  1 0.0007279 0.053688 -148.75
+## - am    1 0.0010949 0.054055 -148.57
+## - qsec  1 0.0032692 0.056229 -147.55
+## - gear  1 0.0033627 0.056323 -147.50
+## <none>              0.052960 -147.10
+## - hp    1 0.0064932 0.059453 -146.10
+## - wt    1 0.0104369 0.063397 -144.43
+## 
+## Step:  AIC=-148.75
+## mpg ~ hp + wt + qsec + am + gear
+## 
+##        Df Sum of Sq      RSS     AIC
+## - am    1 0.0015707 0.055259 -150.00
+## <none>              0.053688 -148.75
+## - gear  1 0.0044069 0.058095 -148.70
+## - qsec  1 0.0066794 0.060368 -147.70
+## - hp    1 0.0094394 0.063128 -146.54
+## - wt    1 0.0308971 0.084585 -138.93
+## 
+## Step:  AIC=-150
+## mpg ~ hp + wt + qsec + gear
+## 
+##        Df Sum of Sq      RSS     AIC
+## <none>              0.055259 -150.00
+## - qsec  1  0.005123 0.060382 -149.69
+## - hp    1  0.012225 0.067484 -146.80
+## - gear  1  0.014106 0.069365 -146.09
+## - wt    1  0.036715 0.091974 -138.75
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = mpg ~ hp + wt + qsec + gear, data = train_data_new)
+## 
+## Coefficients:
+## (Intercept)           hp           wt         qsec         gear  
+##   2.1198251   -0.0006875   -0.0788298    0.0128869    0.0442731
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(mpg }\SpecialCharTok{\textasciitilde{}}\NormalTok{ hp }\SpecialCharTok{+}\NormalTok{ wt }\SpecialCharTok{+}\NormalTok{ qsec }\SpecialCharTok{+}\NormalTok{ gear, }\AttributeTok{data =}\NormalTok{ train\_data\_new)}
+\FunctionTok{summary}\NormalTok{(mod3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = mpg ~ hp + wt + qsec + gear, data = train_data_new)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.081176 -0.030843 -0.009427  0.025218  0.126001 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  2.1198251  0.2045819  10.362 1.04e-09 ***
+## hp          -0.0006875  0.0003190  -2.155  0.04288 *  
+## wt          -0.0788298  0.0211038  -3.735  0.00122 ** 
+## qsec         0.0128869  0.0092357   1.395  0.17750    
+## gear         0.0442731  0.0191219   2.315  0.03080 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.0513 on 21 degrees of freedom
+## Multiple R-squared:  0.8997, Adjusted R-squared:  0.8806 
+## F-statistic: 47.08 on 4 and 21 DF,  p-value: 3.42e-10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_test }\OtherTok{\textless{}{-}}\NormalTok{ test\_data\_new[,}\FunctionTok{c}\NormalTok{(}\StringTok{"hp"}\NormalTok{, }\StringTok{"wt"}\NormalTok{, }\StringTok{"qsec"}\NormalTok{, }\StringTok{"gear"}\NormalTok{)]}
+\NormalTok{y\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(mod3, }\AttributeTok{newdata =}\NormalTok{ X\_test)}
+\NormalTok{mse1 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((test\_data\_new}\SpecialCharTok{$}\NormalTok{mpg }\SpecialCharTok{{-}}\NormalTok{ y\_pred)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{); mse1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.002125338
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(glmnet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 载入需要的程辑包：Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 载入程辑包：'Matrix'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:tidyr':
+## 
+##     expand, pack, unpack
+\end{verbatim}
+
+\begin{verbatim}
+## Loaded glmnet 4.1-6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(}\FunctionTok{data.matrix}\NormalTok{(train\_data\_new[, }\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{)]))}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ train\_data\_new}\SpecialCharTok{$}\NormalTok{mpg}
+
+\NormalTok{ridge\_model }\OtherTok{\textless{}{-}} \FunctionTok{cv.glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per
+## fold
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{best\_lambda }\OtherTok{\textless{}{-}}\NormalTok{ ridge\_model}\SpecialCharTok{$}\NormalTok{lambda.min}
+\NormalTok{best\_model }\OtherTok{\textless{}{-}} \FunctionTok{glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =} \DecValTok{0}\NormalTok{, }\AttributeTok{lambda =}\NormalTok{ best\_lambda)}
+
+\NormalTok{ridge\_coef }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(best\_model, }\AttributeTok{s =} \StringTok{"lambda.min"}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(ridge\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_test }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(}\FunctionTok{data.matrix}\NormalTok{(test\_data\_new[, }\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{)]))}
+\NormalTok{y\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(best\_model, }\AttributeTok{newx =}\NormalTok{ X\_test)}
+
+\NormalTok{mse2 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((test\_data\_new}\SpecialCharTok{$}\NormalTok{mpg }\SpecialCharTok{{-}}\NormalTok{ y\_pred)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{); mse2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.002300487
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(}\FunctionTok{data.matrix}\NormalTok{(train\_data\_new[, }\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{)]))}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ train\_data\_new}\SpecialCharTok{$}\NormalTok{mpg}
+
+\NormalTok{lasso\_model }\OtherTok{\textless{}{-}} \FunctionTok{cv.glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per
+## fold
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{best\_lambda }\OtherTok{\textless{}{-}}\NormalTok{ lasso\_model}\SpecialCharTok{$}\NormalTok{lambda.min}
+\NormalTok{best\_model }\OtherTok{\textless{}{-}} \FunctionTok{glmnet}\NormalTok{(x, y, }\AttributeTok{alpha =} \DecValTok{1}\NormalTok{, }\AttributeTok{lambda =}\NormalTok{ best\_lambda)}
+
+\NormalTok{lasso\_coef }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(best\_model, }\AttributeTok{s =} \StringTok{"lambda.min"}\NormalTok{)}
+\NormalTok{lasso\_coef}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 11 x 1 sparse Matrix of class "dgCMatrix"
+##                      s1
+## (Intercept)  2.16438687
+## cyl         -0.03565296
+## disp        -0.04134394
+## hp          -0.01396909
+## drat         .         
+## wt          -0.04488202
+## qsec         .         
+## vs           .         
+## am           .         
+## gear         .         
+## carb         .
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(lasso\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pstat-126-extra_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_test }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(}\FunctionTok{data.matrix}\NormalTok{(test\_data\_new[, }\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{)]))}
+
+\NormalTok{y\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(best\_model, }\AttributeTok{newx =}\NormalTok{ X\_test)}
+
+\NormalTok{mse3 }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{((test\_data\_new}\SpecialCharTok{$}\NormalTok{mpg }\SpecialCharTok{{-}}\NormalTok{ y\_pred)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{); mse3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.002369412
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mse\_combined }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(mse1, mse2, mse3)}
+\FunctionTok{which.min}\NormalTok{(mse\_combined)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\end{document}

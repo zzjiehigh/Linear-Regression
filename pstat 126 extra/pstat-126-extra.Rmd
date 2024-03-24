@@ -1,0 +1,218 @@
+---
+title: "pstat-126-extra"
+author: "Zejie Gao"
+date: "2023-03-23"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("dplyr")
+library("MASS")
+library("lmtest")
+```
+
+Our goal is to model the response mpg in terms of the rest of the variables (except name).
+
+Partition the data set into two sets a training data and a test data. Remove every fifth observation from the data for use as a test sample.
+Perform an exploratory analysis. Comment on your findings.
+Perform a regression analysis and come up with the best multiple linear regression model that explains the response mpg in terms of the rest (except name). Comment on your findings and explain the methods and strategies that you employed in order to select the model you picked.  Things you have to include in this part:
+- Model diagnostics
+- Justification on whether it is necessary or not to do any transformation on the response or the predictors
+- Variable selection
+Assess the prediction performance by using the test sample.
+
+```{r}
+Car <- read.table("cars (1).txt",header=T)
+str(Car)
+Car <- as.data.frame(Car)
+```
+```{r}
+test_indices <- seq(5, nrow(Car), by=5)
+test_data <- Car[test_indices,] 
+train_data <- Car[-test_indices, ]
+```
+
+1. To perform some exploratory analysis on data car, I create a scatterplot matrix to visualize the relationships between all the variables, a correlation matrix to examine the pairwise correlations between variables, and histograms, density plots, and boxplots to explore the distribution of the response variable "mpg".
+From the correlation matrix, there are 13.36577% correlation between variables higher than 0.9 or lower than -0.9. This data indicate possible high pairwise collinearity that may impact our data analysis.
+Based on the histogram and density plot, most of the mpg value fall bettween 15 and 25 and the distribution is right-skewed. 
+```{r}
+summary(train_data)
+sum(is.na(train_data))
+pairs(train_data[, -1])
+corr_matrix <- cor(train_data[,c(-1,-2)])
+high_cor <- sum(corr_matrix> 0.9 | corr_matrix < 0.9) / sum(corr_matrix)
+high_cor
+hist(train_data$mpg, 
+     main="Distribution of MPG in Training", xlab="MPG")
+plot(density(train_data$mpg), 
+     main="Density Plot of MPG in Training", 
+     xlab="MPG", 
+     ylab="Density")
+boxplot(train_data$mpg, 
+        main="Boxplot of MPG in Training", ylab="MPG")
+```
+2. Model diagnostics on error
+(a) constant variance
+No clear trend on this graph represent the residual could have a constant variance. In addition, ncvTest help prove the contstant variance. 
+```{r}
+mod1 <- lm(mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb,
+           train_data)
+par(mar = c(5,5,1,2))
+plot(fitted(mod1), residuals(mod1))
+car::ncvTest(mod1) 
+```
+(b) normality
+Due to small p-value, we could not reject null hypothesis of the normality. Thus it is normal.
+```{r}
+par(mar = c(5,5,1,2))
+qqnorm(residuals((mod1), 
+                 ylab = "Residuals",
+                 main = 'Residual vs Theoretical quantiles',
+                 pch = 18))
+qqline(residuals(mod1))
+shapiro.test(residuals(mod1))
+```
+(c) Independence
+Due to small value 0.03571, we could accept the alternative hyposis that the true autocorrealtion is greater than 0. 
+```{r}
+dim(train_data)[1]
+y_hat <- mod1$fitted.values
+e_hat <- mod1$residuals
+par(mfrow = c(1, 3), mar = c(4,4,8,2))
+n <- dim(train_data)[1]
+plot(mod1$residuals[1:(n-1)], mod1$residuals[2:n], 
+     xlab = " res_i", 
+     ylab = "res_i+1",
+     main = "sucessive residual")
+dwtest(mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb, data = train_data)
+```
+3. Model diagnosis on unusual observation 
+(a) high leverage
+No high leverage point exist in this data. 
+```{r}
+hatv <- hatvalues(mod1)
+Car_lev <- data.frame(index = seq(length(hatv)),
+                           Leverage = hatv, namesC = train_data$name)
+par(mar = c(4,4,0.5,0.5))
+plot(Leverage ~ index, data = Car_lev, col = "white", pch = NULL)
+text(Leverage ~index, labels = namesC, data = Car_lev , cex = 0.4, font = 2, col = "purple")
+abline(h =2*sum(hatv)/dim(Car_lev)[1], col = "orange", lty = 2)
+sum(hatv > 2*sum(hatv)/dim(Car_lev)[1])
+high_lev <- train_data|>
+  filter(hatv > 2*sum(hatv)/dim(Car_lev)[1])
+high_lev
+```
+(b) outliers
+In this case, we do not have outlier. 
+```{r}
+r <- rstandard(mod1)
+outliers <- sum(r > 3 | r< -3)
+outliers
+```
+(c) influential observations
+There are five influential observations exists in our train_data.
+```{r}
+X <- model.matrix(mod1)
+H <- X %*% solve(t(X) %*% X) %*% t(X)
+print(H[1:5, 1:5])
+sum_diag <-sum(diag(H)); sum_diag
+p_star <- ncol(X); p_star
+cook <- cooks.distance(mod1)
+Car_cook <- data.frame(index = seq(length(cook)),
+                            cookd = abs(cook), namesC = train_data$name)
+par(mar = c(4,4,0.5,0.5))
+plot(cookd ~ index, data = Car_cook, col = "white", pch = NULL)
+text(cookd ~index, labels = namesC, data = Car_cook , cex = 0.4, 
+     font = 2, col = "purple")
+abline(h = 4/dim(X)[1], col = "red", lty = 2)
+sum(cook >= 4/dim(X)[1])
+```
+3. Transformation
+Since the confidence interval do not contains lambda = 1, transformation is necessary. Also, new train data have independent residual by using the dwtest.
+```{r}
+par(mfrow = c(1, 2), mar = c(2, 2, 0.8, 0.5))
+bc <- boxcox(mod1, plotit = TRUE)
+boxcox(mod1, plotit = TRUE, lambda = seq(0.4, 1.3, by = 0.1))
+lambda <- bc$x[which.max(bc$y)]; lambda
+train_data_new <- train_data |>
+  mutate(mpg = (mpg^(lambda)-1)/lambda)
+train_data_new
+test_data_new <- test_data |>
+  mutate(mpg = (mpg^(lambda)-1)/lambda)
+# change both train and test
+mod2 <- lm(mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb,
+           train_data_new)
+plot(mod2)
+plot(mod1)
+dwtest(mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear + carb, data = train_data_new)
+```
+4. model selection
+After performing the necessary analyses, it was found that the mod3 model (mpg ~ hp + wt + qsec + gear) has the lowest AIC and MSE compared to the other models tested using ridge and lasso regression. Based on these findings, it is suggested that lasso regression favors the inclusion of only the four predictors in mod3.
+
+Furthermore, ridge regression resulted in a higher MSE compared to mod3, indicating that mod3 provides a better fit to the data. However, the difference in MSE between ridge regression and mod3 was not very large. Therefore, if researchers want to include more variables in the model, ridge regression may be a better choice.
+
+```{r}
+step(mod2, direction = "backward")
+```
+```{r}
+mod3 <- lm(mpg ~ hp + wt + qsec + gear, data = train_data_new)
+summary(mod3)
+X_test <- test_data_new[,c("hp", "wt", "qsec", "gear")]
+y_pred <- predict(mod3, newdata = X_test)
+mse1 <- mean((test_data_new$mpg - y_pred)^2); mse1
+```
+
+```{r}
+library(glmnet)
+x <- scale(data.matrix(train_data_new[, c(-1,-2)]))
+y <- train_data_new$mpg
+
+ridge_model <- cv.glmnet(x, y, alpha = 0)
+best_lambda <- ridge_model$lambda.min
+best_model <- glmnet(x, y, alpha = 0, lambda = best_lambda)
+
+ridge_coef <- coef(best_model, s = "lambda.min")
+
+plot(ridge_model)
+
+X_test <- scale(data.matrix(test_data_new[, c(-1,-2)]))
+y_pred <- predict(best_model, newx = X_test)
+
+mse2 <- mean((test_data_new$mpg - y_pred)^2); mse2
+```
+
+```{r}
+x <- scale(data.matrix(train_data_new[, c(-1,-2)]))
+y <- train_data_new$mpg
+
+lasso_model <- cv.glmnet(x, y, alpha = 1)
+best_lambda <- lasso_model$lambda.min
+best_model <- glmnet(x, y, alpha = 1, lambda = best_lambda)
+
+lasso_coef <- coef(best_model, s = "lambda.min")
+lasso_coef
+
+plot(lasso_model)
+
+X_test <- scale(data.matrix(test_data_new[, c(-1,-2)]))
+
+y_pred <- predict(best_model, newx = X_test)
+
+mse3 <- mean((test_data_new$mpg - y_pred)^2); mse3
+```
+```{r}
+mse_combined <- c(mse1, mse2, mse3)
+which.min(mse_combined)
+```
+
+```{r}
+a <- c(7.65, 7.60, 7.65, 7.7, 7.55, 7.55, 7.4, 7.4, 7.5, 7.5)
+summary(a)
+stan <- var(a)^(0.5); stan
+t.test(a)
+```
+

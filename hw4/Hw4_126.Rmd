@@ -1,0 +1,141 @@
+---
+title: "Homework 4"
+author: "Zejie Gao"
+date: "Due date:March 17th 2023 at 23:59 PT"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. This question uses the Auto dataset available in the ISLR package. The dataset under the name *Auto* is automatically available once the ISLR package is loaded.
+
+```{r dat, include=TRUE}
+library(ISLR)
+data(Auto)
+library("tidyverse")
+library("dplyr")
+library("lmtest")
+library("MASS")
+```
+
+```{r model, include=FALSE}
+Autod<- as.data.frame(Auto)
+Autod$cylinders<- as.factor(Autod$cylinders)
+Autod$year<- as.factor(Autod$year)
+Autod$origin<- as.factor(Autod$origin)
+lmod<- lm(mpg~. - name, Autod)
+```
+The dataset *Auto* contains the following information for $392$ vehicles:
+
+- mpg: miles per gallon
+- cylinders: number of cylinders (between 4 and 8)
+- displacement: engine displacement (cu.inches)
+- horsepower: engine horsepower
+- weight: vehicle weight (lbs)
+- acceleration: time to accelerate from 0 to 60 mph (seconds)
+- year: model year 
+- origin: origin of the vehicle (numerically coded as 1: American, 2: European, 3: Japanese)
+- name: vehicle name
+
+Our goal is to analyze several linear models where *mpg* is the response variable.\
+
+(a) **(2 pts)** In this data set, which predictors are qualitative, and which predictors are quantitative?
+In this data set, mpg, displacement, horsepower, weight and acceleration are quantitative, and the rest of the predictors such as cylinders, year and origin are qualitative. 
+```{r}
+summary(Autod)
+```
+
+
+(b) **(2 pts)** Fit a MLR model to the data, in order to predict mpg using all of the other predictors except for name. For each predictor in the fitted MLR model, comment on whether you can reject the null hypothesis that there is no linear association between that predictor and mpg, conditional on the other predictors in the model.
+Looking at the analysis of summary table, we see that all of the predictors except for acceleration and displacement have a very low p-value (less than 0.05), indicating strong evidence that there is a linear association between each of these predictors and mpg, conditional on the other predictors in the model. 
+As acceleration, the p-value (0.3315) is greater than 0.05, suggesting that fail to reject the null hypothesis that there is no linear association between between acceleration and mpg, after controlling for the other predictors in the model. 
+As displacement, the p-value (0.081785) is silgtly grater than 0.05; thus, they don't have linear association when using 5% significant level. Although there are variables within the predictor "year" (specifically, year71 and year72) that are not statistically significant, it is still reasonable to consider "year" as a predictor of the outcome variable due to the presence of other variables within the predictor that do show statistical significance (namely, year77 and year78). 
+```{r}
+lmod<- lm(mpg~ cylinders + displacement + horsepower + weight + acceleration +
+                       year + origin, Autod)
+summary(lmod)
+anova(lmod)
+```
+
+(c) **(2 pts)** What mpg do you predict for a Japanese car with three cylinders, displacement 100, horsepower of 85, weight of 3000, acceleration of 20, built in the year 1980?
+```{r}
+new_data <- data.frame(cylinders = factor(3, levels = levels(Autod$cylinders)),
+                       displacement = 100, 
+                       horsepower = 85, 
+                       weight = 3000, 
+                       acceleration = 20, 
+                       year = factor(80, levels = levels(Autod$year)),
+                       origin = factor(3, levels = levels(Autod$origin)))
+predicted_mpg <- predict(lmod, newdata = new_data, interval = "prediction")
+predicted_mpg
+```
+
+(d) **(2 pts)** On average, holding all other predictor variables fixed, what is the difference between the mpg of a Japanese car and the mpg of an European car?
+Therefore, on average, holding all other predictor variables fixed, the mpg of a Japanese car is 0.5996415 higher than the mpg of an European car.
+```{r}
+summary(lmod)
+dif_mpg_J_E <- 2.2929268-1.6932853; dif_mpg_J_E
+```
+
+(e) **(2 pts)** Fit a model to predict *mpg* using origin and horsepower, as well as an interaction between origin and horsepower. Present the summary output of the fitted model, and write out the fitted linear model.
+\[\hat{\text{mpg}}=34.476496-0.121320*\text{horsepower}+10.99723*I(\text{origin=2})+14.339718*I(\text{origin=3})-0.100515*\text{horsepower}*I(\text{origin=2})-0.108723*\text{horsepower}*I(\text{origin=3}).\]
+```{r}
+mod2 <-lm(mpg~ horsepower + origin + horsepower:origin, Autod)
+summary(mod2)
+```
+
+(f) **(2 pts)** If we are fitting a polynomial regression with mpg as the response variable and weight as the predictor, what should be a proper degree of that polynomial?
+The p-values in each model's output indicate whether each predictor variable's coefficient is significantly different from zero. A p-value less than 0.05 suggests strong evidence against the null hypothesis that the coefficient is equal to zero, and we can conclude that the predictor variable is significantly associated with the response variable. From there model below, only model 3 have p-value that is bigger than 0.05, suggesting that weight^3 is a significant predictor of mpg in m3. Additional, the residual vs fitted value plot in m2 is more flatter than that in m1. Thus, second should be a proper degree of that polynomial, quadratic models. 
+```{r}
+summary(m1 <- lm(mpg~weight,Autod))$coefficient
+summary(m2 <- lm(mpg~weight + I(weight^2),Autod))$coefficient
+summary(m3 <- lm(mpg~weight + I(weight^2) + I(weight^3),Autod))$coefficient
+par(mfrow = c(1, 4), mar = c(0,0,1.5,1))
+plot(m1, cex.main = 1, cex.lab = 0.5, cex.axis = 0.5, pch = 20)
+plot(m2, cex.main = 1, cex.lab = 0.5, cex.axis = 0.5, pch = 20)
+```
+
+(g) **(4 pts)** Perform a backward selection, starting with the full model which includes all predictors (except for name). What is the best model based on the AIC criterion? What are the predictor variables in that best model?
+
+The AIC value will decrease as the model fits the data better.In the first step, the acceleration variable is removed from the model, resulting in a lower AIC value of 840.72. This means that the model without acceleration is a better fit for the data than the original model.In the second step, the remaining predictor variables are cylinders, displacement, horsepower, weight, year, and origin. The output shows that no other variables should be removed from the model since the AIC value remains the same as before. Therefore, this is the best model based on AIC criterion. The AIC values indicate that cylinders, displacement, horsepower, weight, year, and origin are the predictor variables in that best model.
+formula = mpg ~ cylinders + displacement + horsepower + weight + 
+    year + origin
+```{r}
+step(lmod, direction = "backward")
+```
+
+2. Use the *fat* data set available from the *faraway* package. Use the percentage of body fat: *siri* as the response, and the other variables, except *bronzek* and *density* as potential predictors. Remove every tenth observation from the data for use as a test sample. Use the remaining data as a training sample, building the following models:
+```{r}
+library(faraway)
+data(fat)
+head(fat)
+class(fat)
+fat <- subset(fat, select = c(2, 4:18))
+test_indices <- seq(10, nrow(fat), by=10)
+test_data <- fat[test_indices,] 
+training_data <- fat[-test_indices, ]
+```
+
+(a) **(5 pts)** Linear regression with all the predictors.
+```{r}
+MLR_f <- lm(siri~.,training_data);summary(MLR_f)
+```
+
+(b) **(5 pts)** Ridge regression. 
+```{r}
+library(glmnet)
+x <- scale(data.matrix(fat)[,-1])
+x <- x[-test_indices,]
+y <- training_data$siri
+ridge_model <- cv.glmnet(x, y, alpha = 0);ridge_model
+best_lambda <- ridge_model$lambda.min
+best_lambda
+best_model <- glmnet(x, y, alpha = 0,lambda = best_lambda);best_model
+coef(best_model, s = "lambda.min")
+plot(ridge_model)
+```
+

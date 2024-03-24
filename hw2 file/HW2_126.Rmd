@@ -1,0 +1,159 @@
+---
+title: "HW2_126"
+author: "Zejie Gao"
+date: "2023-02-07"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("dplyr")
+```
+1. This question uses the cereal data set available in the Homework Assignment 2 on Canvas. The following command can be used to read the data into R. Make sure the “cereal.txt” file is in the same folder as your R/Rmd file.
+```{r}
+Cereal <- read.table("cereal.txt",header=T)
+str(Cereal)
+Cereal <- as.data.frame(Cereal)
+```
+
+(a) (4pts) Explore the data and perform a descriptive analysis of each variable, include any plot/statistics that you find relevant (histograms, scatter diagrams, correlation coefficients). Did you find any outlier? If yes, is it reasonable to remove this observation? why?
+
+Based on the minimum of descriptive statistics, summary_statistics, numbers blow 0 in predictors carbo, sugars, and potass are impossible in the real life. Those value may comes from entry mistake, so we should remove them first. 
+```{r}
+Cereal <- Cereal|>
+  select(name, rating, protein, fat, fiber, carbo, sugars, potass, vitamins
+         , cups)
+summary_statistics <- summary(Cereal)
+summary_statistics
+
+Cereal_model <- Cereal|> # filter all the value greater than zero
+  filter(carbo >= 0,
+         sugars >= 0,
+         potass >= 0
+  )
+```
+
+```{r}
+Cereal_fit <- lm(rating ~ protein + fat + fiber + carbo + sugars + potass 
+                 + vitamins + cups, data = Cereal_model)
+Cereal_fit 
+r <- rstandard(Cereal_fit )
+data.sres <- data.frame(index = seq(length(r)),
+                        stdres = abs(r), names = Cereal_model$name)
+par(mar = c(4, 4, 0.5, 0.5))
+plot(stdres ~ index, data = data.sres, col = "White", pch = NULL)
+text(stdres ~ index, labels = names, data = data.sres, cex = 0.4, font = 2
+     , col = "purple")
+abline(h = 3, col = "red", lty = 2)
+```
+Since we define the outliers as points that does not fit the model well, which means data point for which yi - yi_hat is large. By plotting standardized residuals vs index, we can find out that there is no outliers in our observation. This is because that none of the index satisfy the rule of thumb, which also equivalent to abs(r) >= 3. 
+
+(b) (3pts) Use the lm function in R to fit the MLR model with rating as the response and the other 8 variables as predictors. Display the summary output.
+```{r}
+Cereal_fit <- lm(rating ~ protein + fat + fiber + carbo + sugars + potass 
+                 + vitamins + cups, data = Cereal_model)
+summary(Cereal_fit)
+```
+
+(c)(3pts) Which predictor variables are statistically significant under the significance threshold value of 0.01?
+
+protein, fat, fiber, sugars and vitamins are satistically significant under the significant threshold value of 0.01 because their p-valuea are less than 0.01. We successfully reject the H0: betai = 0
+
+
+(d)(2pts) What proportion of the total variation in the response is explained by the predictors?
+```{r}
+r_squared <- summary(Cereal_fit)$r.squared
+r_squared
+```
+
+(e)(3pts) What is the null hypothesis of the global F-test? What is the p-value for the global F-test? Do the 7 predictor variables explain a significant proportion of the variation in the response?
+
+The null hypothesis of the global F-test is that none of the predictor variables are statistically significant in explaining the response variable.
+The p-value is the probability of observing a test statistic at least as extreme as the observed results, assuming that the null hypothesis is true. It is often expressed as "Pr(>F)", which is the probability of observing a value larger than the F-statistic on the F-distribution. 
+In the output provided, the p-value for the global F-test is less than 2.2e-16, which is far smaller than 0.05. Therefore, we reject the null hypothesis and conclude that the 8 predictor variables explain a significant proportion of the variation in the response.
+```{r}
+mod_M <- lm(rating ~ ., Cereal_model[,sapply(Cereal_model, is.numeric)]) 
+# Larger model with all the predictors
+mod_1 <- lm(rating ~ 1, Cereal_model[,sapply(Cereal_model, is.numeric)]) 
+# Smaller model with only intercept
+anova1 <- anova(mod_1, mod_M) ; anova1
+```
+
+(f)(2pts) Consider testing the null hypothesis H0 : beta(carbo) = 0, where beta(carbo) is the coefficient corresponding to carbohydrates in the MLR model. Use the t value available in the summary output to compute the p-value associated with this test, and verify that the p-value you get is identical to the p-value provided in the summary output.
+```{r}
+n <- dim(Cereal_model)[1] 
+p <- 8 # number of predictors
+round(coefficients(summary(Cereal_fit)), 8)
+
+pval_carbo = pt(q = -2.0765060 , df = n - p - 1) * 2
+pval_carbo
+
+
+mod_M <- lm(rating ~ ., Cereal_model[,sapply(Cereal_model, is.numeric)]) 
+mod_2 <- lm(rating ~ protein + fat + fiber +  sugars + potass + vitamins +cups
+            ,Cereal_model[,sapply(Cereal_model, is.numeric)]) # Smaller model 
+anova2 <- anova(mod_2, mod_M); anova2
+pval_carbo1 <- 1 - pf(anova2$F[2], 1, 65); pval_carbo1
+```
+
+(g)(4pts)Suppose we are interested in knowing if either vitamins or potass had any relation to the response rating. What would be the corresponding null hypothesis of this statistical test? Construct a F-test, report the corresponding p-value, and your conclusion.
+The null hypothesis of the F-test is that the coefficients for vitamins and potass are both equal to zero, and the alternative hypothesis is that at least one of them is non-zero. The output shows that the F-statistic is 6.9863 and the corresponding p-value is 0.001785. Since the p-value is less than 0.05, we reject the null hypothesis that both vitamins and potass coefficients are zero, and conclude that there is evidence of a significant relationship between at least one of the predictors and the rating response variable.
+```{r}
+mod_M <- lm(rating ~ ., Cereal_model[,sapply(Cereal_model, is.numeric)]) 
+mod_3 <- lm(rating ~ protein + fat + fiber + carbo + sugars + cups
+            ,Cereal_model[,sapply(Cereal_model, is.numeric)])
+anova3 <- anova(mod_3, mod_M); anova3
+```
+
+(h)(3pts) Use the summary output to construct a 99% confidence interval for beta(protein). What is the interpretation of this confidence interval?
+Interpretation: If we were to repeat the sampling and regression process many times, 99% of the resulting intervals would contain the true value of beta(protein). It is also an indicator of the precision of our estimate for the protein variable.
+```{r}
+confint(Cereal_fit, "protein", level = 0.99)
+```
+
+(i)(3pts) What is the predicted rating for a cereal brand with the following information:
+Protein=3
+Fat=5
+Fiber=2
+Carbo=13
+Sugars=6
+Potass=60
+Vitamins=25 
+Cups=0.8
+```{r}
+new_data <- data.frame(protein=3, fat=5, fiber=2, carbo=13, sugars=6, potass=60
+                       ,vitamins=25, cups=0.8)
+predicted_rating <- predict(Cereal_fit, newdata=new_data); predicted_rating
+```
+
+(j). (3pts) What is the 95% prediction interval for the observation in part (i)? What is the interpretation of this prediction interval?
+If we were to repeat the sampling and regression process many times, 95% of the resulting intervals would contain the true value of the predicted response variable (y), which means that there is a 95% chance that the true value of the response variable for a new observation falls between 19.96214 and 40.525.
+```{r}
+predicted_CIs_rating <- predict(Cereal_fit, newdata=new_data
+                                , interval = "prediction") 
+predicted_CIs_rating
+```
+
+2.(20pts) Consider the MLR model with p predictors:
+$$
+\begin{aligned}
+& E\left(\hat{\sigma}\right)=E\left(\frac{S S R}{n-p^*}\right) \\
+&=E\left(\frac{\hat{\varepsilon}^{T} \hat{\varepsilon}}{n-p^*}\right) \quad \text { since } \frac{\hat{\varepsilon}^{T} \hat{\varepsilon}}{\sigma^2} \sim X^2\left(n-p^*\right) \\
+&=\frac{1}{n-p^*} E\left(\hat{\varepsilon}^{T} \hat{\varepsilon}\right) \quad \text { Thus, } E\left(\frac{\hat{\varepsilon}^{T} \hat{\varepsilon}}{\sigma^2}\right)=n-p^* \\
+&=\frac{\sigma^2}{n-p^*} E\left(\frac{\hat{\varepsilon}^{T} \hat{\varepsilon}}{\sigma^2}\right) \\
+&=\frac{\sigma^2}{n-p^*}\left(n-p^*\right) \\
+&=\sigma^2 \\
+& \operatorname{Var}\left(\hat{\sigma}^2\right)=\operatorname{Vav}\left(\frac{S S R}{n-p^*}\right) \\
+&=\operatorname{Var}\left(\frac{\hat{\varepsilon}^{T} \varepsilon}{n-p^*}\right) \\
+&=\frac{1}{\left(n-p^*\right)^2} \operatorname{Var}\left(\hat{\varepsilon}^{T} \hat{\varepsilon}\right) \\
+&=\frac{\sigma^4}{\left(n-p^*\right)^2} \operatorname{Var}\left(\frac{\hat{\varepsilon}^{T} \hat{\varepsilon}}{\sigma^2}\right) \\
+&=\frac{\sigma^4}{\left(n-p^*\right)^2} 2 \times\left(n-p^*\right) \\
+&=\frac{2 \sigma^4}{\left(n-p^*\right)} \quad \operatorname{Var}\left(\frac{\hat{\varepsilon}^{T} \hat{\varepsilon}}{\sigma^2}\right)=2 \times\left(n-p^*\right) \\
+&
+\end{aligned}
+$$
+

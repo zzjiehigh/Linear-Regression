@@ -1,0 +1,135 @@
+---
+title: "Homework Assignment 1"
+author: "Zejie Gao"
+date: "2023-02-01"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. The dataset trees contains measurements of Girth (tree diameter) in inches, Height in feet, and Volume of timber (in cubic feet) of a sample of 31 felled black cherry trees. The following commands can be used to read the data into R.
+```{r}
+require(datasets)
+head(trees)
+```
+
+(a) Briefly describe the data set trees, i.e., how many observations (rows) and how many variables (columns) are there in the data set? What are the variable names?
+```{r}
+nrow(trees)
+ncol(trees)
+ls(trees) 
+# There are 31 rows and 3 column in the data set, with three variables named "Girth","Height", and  "Volume"
+```
+(b) Use the pairs function to construct a scatter plot matrix of the logarithms of Girth, Height and Volume.
+```{r}
+library(tidyverse)
+log_trees <- trees |>
+  mutate(Girth = log(Girth)) |>
+  mutate(Height = log(Height))|>
+  mutate(Volume = log(Volume))
+pairs(log_trees)
+```
+(c) Use the cor function to determine the correlation matrix for the three (logged) variables.
+```{r}
+cor(log_trees)
+```
+(d) Are there missing values?
+```{r}
+is.na(log_trees)
+sum(is.na(log_trees))
+# No, there is no missing values
+```
+(e) Use the lm function in R to fit the multiple regression model:
+    log(Volumei) = beta0 + beta1 log(Girthi) + beta2 log(Heighti) + ei
+    and print out the summary of the model fit.
+```{r}
+fit <- lm(Volume ~ Girth + Height, data = log_trees)
+fit
+y <- log_trees$Volume
+x1 <- log_trees$Girth
+x2 <- log_trees$Height
+R.2 <- 1 - sum((fit$residuals^2))/ (sum((y - mean(y))^2))
+R.2
+summary(fit)
+# Estimation of the lm: log(Volumei) = -6.63 + 1.98 log(Girthi) + 1.12 log(Heighti) + ei
+# Since R^2 (0.9777 or 0.978 on the summary) is very close to 1, the model better fits the data. 
+```
+(f)
+
+```{r}
+v1 <- log_trees$Girth
+v2 <- log_trees$Height
+X <- cbind(rep(1, times=nrow(log_trees)),v1,v2) 
+y <- matrix(log_trees$Volume)
+beta_hat <- solve(t(X)%*%(X))%*%(t(X)%*%(y))
+beta_hat
+# The beta_hat matrix match the output I got in (e)
+```
+(g) Compute the predicted response values from the fitted regression model, the residuals, and an estimate of the error variance.
+
+```{r}
+y_hat <- X%*%beta_hat
+y_hat
+Res <- fit$residuals
+sigma2.hat <- sum(Res^2) / fit$df.residual
+sigma2.hat
+SSR <- sum(fit$residuals^2)
+SSR
+# SSR = 0.1855
+# Var(ei) = 0.006624
+```
+2. Consider the simple linear regression model:
+                                
+(a) Assume beta0 = 0. What is the interpretation of this assumption? What is the implication on the regression line? What does the regression line plot look like?                                
+```{r}
+# The assumption represent that the yi will have a high likelihood to be zero when xi equals to zero. 
+# It implicate the y intercept of linear regression model is zero. 
+# The regression line start from coordinate (0,0).
+```
+(b) Derive the LS estimate of beta1 when beta0 = 0.
+```{r}
+# beta1 = sum((y-mean(y))*(x-mean(x)))/sum((x-mean(x))ˆ2)
+# beta1 does not influenced by beta0 value
+```
+(c) How can we introduce this assumption within the lm function?
+```{r}
+# lm(y ~ x-1, data = dataset)
+# Based on the assumption beta0 = 0, beta0 from lm function can be deleted.Then, the lm function will become yi = beta1xi +ei 
+```
+(d) For the same model, assume beta1 = 0. What is the interpretation of this assumption? What is the implication on the regression line? What does the regression line plot look like?
+```{r}
+# The assumption represent that the value of yi does not affected by the value of xi. The predictor x1 is not significant when explaining yi.
+# It implicate the linear regression model wasn't able to find a linear relationship between the yi and x1.
+# The plot will only have a horizontal line which is y = constant value (beta0 + ei) or so called the mean of y.
+```
+(e) Derive the LS estimate of beta0 when beta1 = 0.
+```{r}
+# beta0 = mean(y)
+```
+(f) How can we introduce this assumption within the lm function?
+```{r}
+# lm(y ~ 1, data = dataset)
+# Based on the assumption beta1 = 0, beta1 part from lm function can be deleted.Then, the lm function will become  y1i = beta0 +  ei.
+```
+3. Consider the simple linear regression model:
+                             
+(a) Use the LS estimation general result beta_hat =  to find the explicit estimates for beta0 and beta1.
+```{r}
+# on the pdf
+```
+
+(b) Show that the LS estimates beta0_hat and beta1_hat are unbiased estimates for beta0 and beta1 respectively.
+```{r}
+# on the pdf
+```
+
+
+
+
+
+
+
+
+

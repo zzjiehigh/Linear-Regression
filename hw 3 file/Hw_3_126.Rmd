@@ -1,0 +1,165 @@
+---
+title: "Homework 3"
+subtitle: "PSTAT Winter 2023"
+author : "Zejie Gao"
+output: pdf_document
+date: "Due date: March 10th, 2023 at 23:59 PT"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("dplyr")
+library("lmtest")
+library("MASS")
+```
+
+1. This question uses the *cereal* data set available in the Homework Assignment 3 on Canvas.
+\
+The data set *cereal* contains measurements for a set of $77$ cereal brands. For this assignment only consider the following variables:
+
+- Rating: Quality rating
+- Protein: Amount of protein. 
+- Fat: Amount of fat.
+- Fiber: Amount of fiber.
+- Carbo: Amount of carbohydrates.
+- Sugars: Amount of sugar.
+- Potass: Amount of potassium. 
+- Vitamins: Amount of vitamins.
+- Cups: Portion size in cups.
+
+Our goal is to study how *rating* is related to all other 8 variables.\
+```{r}
+Cereal <- read.table("cereal.txt",header=T)
+str(Cereal)
+Cereal <- as.data.frame(Cereal)
+head(Cereal)
+```
+
+(a) **(2 pts)** Run a multiple linear regression model after removing observations 5,21 and 58. Calculate the fitted response values and the residuals from the linear model mentioned above. Use *head* function to show the first 5 entries of the fitted response values and the first 5 entries of the residuals.
+```{r}
+Cereal_a <- Cereal[c(-5,-21, -58),c("name","rating","protein", "fat", "fiber", 
+                                    "carbo", "sugars", "potass", "vitamins", 
+                                    "cups")] 
+MLR_a <- lm(rating ~ protein + fat + fiber + carbo + sugars + potass + vitamins 
+            + cups ,data = Cereal_a); summary(MLR_a)
+y_hat <- MLR_a$fitted.values; head(y_hat,5)
+e_hat <- MLR_a$residuals; head(e_hat,5)
+```
+
+(b) **(2 pts)** Use a graphical diagnostic approach to check if the random errors have constant variance. Briefly explain what diagnostics method you used and what is your conclusion.
+Conclusion: To check the homoscedasticity or constant variance, I plot residuals verse fitted response value on the graph. If the random errors have constant variance, the plot should show no trend in the spread of the residuals as the predicted values increase. In this graph we could see a slight decreasing trend in the range (30,45), so the random error could have non-constant variance. To be more specific, I make use of ncvTest which suffice for providing the results of the non-constant variance test. Due to small p-value(0.049959), less than 0.05, we successfully reject the null hypothesis which random error have constant error. 
+```{r, include=TRUE, echo=TRUE}
+plot(y_hat,e_hat,xlab='Fitted',ylab='Residuals')
+abline(h=0)
+car::ncvTest(MLR_a) # Null hypothesis = constant error variance
+``` 
+
+(c) **(2 pts)** Use a graphical method to check if the random errors follow a normal distribution. What do you conclude?
+Using QQ plot to check normality. 
+The sample is plotted against the theoretical quantiles, and if the points on the plot form a straight line, then the sample can be assumed to follow the theoretical distribution, which is normal distribution. Most of the points fall on the normality line; only the latter part slightly higher than the line. We need more information to check normality. 
+```{r, include=TRUE, echo=TRUE}
+qqnorm(residuals(MLR_a),ylab='Residuals',
+       main='Residual vs Theoretical quantiles', col = "red")
+qqline(residuals(MLR_a))
+```
+
+(d) **(3 pts)** Run a *Shapiro-Wilk* test to check if the random errors follow a normal distribution. What is the null hypothesis in this test? What is the p-value associated with the test? What is your conclusion?
+The Shapiro-Wilk test is a statistical test used to determine if a sample of data comes from a normal distribution. 
+The null hypothesis of the Shapiro-Wilk test is that residuals are normal. 
+The p-value is a measure of the evidence against the null hypothesis of normality. 
+Since the p-value(0.1728) is greater than 0.05,  we fail to reject the null hypothesis of normality, meaning that there is no significant evidence that the residuals do not follow a normal distribution.
+```{r}
+shapiro.test(residuals(MLR_a))
+```
+
+(e) **(3 pts)** Plot successive pairs of residuals. Do you find serial correlation among observations?
+From the successive residual and ordered residual plot, it seems like no trend in the graph. In addition, none of the Lag on Series residuals(MLR_a) plot exceed the upper and lower bound. Thus, we conclude that there is no evidence of serial correlation among the errors.
+
+```{r}
+par(mfrow = c(1, 3), mar = c(4,4,8,2))
+n <- dim(Cereal_a)[1]
+plot(MLR_a$residuals[1:(n-1)], MLR_a$residuals[2:n], 
+     xlab = " res_i", 
+     ylab = "res_i+1",
+     main = "sucessive residual")
+plot(seq(1, dim(Cereal_a)[1],1), e_hat, 
+     xlab="Index", 
+     ylab="Residuals",
+     main = "ordered residual")
+acf(residuals(MLR_a), type="partial")
+```
+
+(f) **(3 pts)** Run a *Durvin-Watson* test to check if the random errors are uncorrelated. What is the null hypothesis in this test? What is the p-value associated with the test? What is your conclusion?
+The null hypothesis in this test is uncorrelated errors. 
+The p-value is a measure of the evidence against the null hypothesis of non-correlation or independence. 
+Conclusion: Since the p-value(0.2041) is greater than 0.05,  we fail to reject the null hypothesis of uncorrelated errors, meaning that there is no significant evidence that true autocorrelation is greater than 0.
+```{r}
+dwtest(rating ~ protein + fat + fiber + carbo + sugars + potass 
+                 + vitamins + cups, data = Cereal_a)
+```
+
+(g) **(2 pts)** Compute the hat matrix $\boldsymbol H$ in this data set (you don’t need to show the entire matrix). Verify numerically that $\sum_{i=1}^nH_{ii}=p^*=p+1$.
+```{r}
+X <- model.matrix(MLR_a)
+H <- X %*% solve(t(X) %*% X) %*% t(X)
+print(H[1:5, 1:5])
+sum_diag <-sum(diag(H)); sum_diag
+p_star <- ncol(X); p_star
+```
+
+(h) **(2 pts)** Check graphically if there is any high-leverage point. What is the criterion you used?
+I make use of the rule of thumb for identifying high-leverage points in a regression model, based on the number of predictor variables and the sample size. A commonly used threshold is a leverage value greater than three times the average leverage for the model,and here we have 5 observations have high-leverage point including 100%_Natural_Bran, All-Bran_with_Extra_Fiber, Cheerios, Special_K, and Total_Raisin_Bran.
+
+```{r}
+hatv <- hatvalues(MLR_a)
+Cereal_a_lev <- data.frame(index = seq(length(hatv)),
+                           Leverage = hatv, namesC = Cereal_a$name)
+par(mar = c(4,4,0.5,0.5))
+plot(Leverage ~ index, data = Cereal_a_lev, col = "white", pch = NULL)
+text(Leverage ~index, labels = namesC, data = Cereal_a_lev , cex = 0.4, font = 2, col = "purple")
+abline(h =2*sum(hatv)/dim(Cereal_a_lev)[1], col = "orange", lty = 2)
+sum(hatv > 2*sum(hatv)/dim(Cereal_a_lev)[1])
+high_lev <- Cereal_a|>
+  filter(hatv > 2*sum(hatv)/dim(Cereal_a_lev)[1])
+high_lev
+```
+
+(i) **(2 pts)** Compute the standardized residuals. Without drawing a plot, is there any outlier? What is the criterion you used?
+To check for outliers based on the standardized residuals, a common criterion is to look for values that are greater than 3 in absolute value. Values greater than 3 or less than -3 indicate that the residual is more than three standard deviations away from the expected residual, which may suggest that the observation is an outlier.In this case, we do not have outlier. 
+```{r}
+r <- rstandard(MLR_a)
+outliers <- sum(r > 3 | r< -3)
+outliers
+```
+
+(j) **(2 pts)** Calculate the Cook's distance. How many observations in this data set have a Cook's distance that is greater than $4/n$?
+There are seven observations in this data set have a Cook's distance that is greater than $4/n$, including 100%_Natural_Bran, All-Bran, Cheerios, Golden_Crisp, Maypo, Shredded_Wheat_spoon_size and Special_K. 
+```{r}
+cook <- cooks.distance(MLR_a)
+Cereal_a_cook <- data.frame(index = seq(length(cook)),
+                            cookd = abs(cook), namesC = Cereal_a$name)
+par(mar = c(4,4,0.5,0.5))
+plot(cookd ~ index, data = Cereal_a_cook, col = "white", pch = NULL)
+text(cookd ~index, labels = namesC, data = Cereal_a_cook , cex = 0.4, 
+     font = 2, col = "purple")
+abline(h = 4/dim(X)[1], col = "red", lty = 2)
+CD_greater_than <- Cereal_a|>
+  filter(cook > 4/dim(X)[1]); CD_greater_than
+par(mfrow = c(2,2))
+plot(MLR_a)
+sum(cook >= 4/dim(X)[1])
+```
+
+(k) **(2 pts)** Check whether the response needs a Box-Cox transformation. If a Box-Cox transformation is necessary, what would be the form of the transformation?
+Since the confidence interval contains lambda = 1, no transformation is necessary. 
+```{r}
+par(mfrow = c(1, 2), mar = c(2, 2, 0.8, 0.5))
+boxcox(MLR_a, plotit = TRUE)
+boxcox(MLR_a, plotit = TRUE, lambda = seq(0.4, 1.3, by = 0.1))
+```
+
+
+
+
+
